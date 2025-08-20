@@ -1,0 +1,525 @@
+// SSC A+ Achiver AI — Study Website (Full React + Tailwind + Vite)
+
+// ================= index.html =================
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSC A+ Achiver AI — Study Website</title>
+  </head>
+  <body class="bg-gray-50">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+// ================= package.json =================
+{
+  "name": "ssc-achiver-ai-study",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.344.0",
+    "framer-motion": "^10.16.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.2",
+    "postcss": "^8.4.6",
+    "tailwindcss": "^3.3.0",
+    "vite": "^4.0.0"
+  }
+}
+
+// ================= tailwind.config.js =================
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: { extend: {} },
+  plugins: [],
+};
+
+// ================= postcss.config.js =================
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+
+// ================= vite.config.js =================
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+})
+
+// ================= src/main.jsx =================
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import './index.css'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+
+// ================= src/index.css =================
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// ================= src/App.jsx =================
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { BookOpen, Brain, FileText, CheckCircle } from 'lucide-react';
+
+export default function App() {
+  const [studyPlan, setStudyPlan] = useState(null);
+  const [subject, setSubject] = useState('');
+
+  const generatePlan = () => {
+    setStudyPlan({
+      subject,
+      routine: [
+        'Chapter 1: Basics',
+        'Chapter 2: Advanced Concepts',
+        'Practice MCQs',
+        'Revise last 5 years questions'
+      ],
+      tips: 'Focus on weak areas, revise daily, and practice time management.'
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-6">
+      <header className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-indigo-600">SSC A+ Achiver AI — Study Website</h1>
+        <p className="text-gray-600">AI-powered study planner and guide for SSC students</p>
+      </header>
+
+      <main className="max-w-3xl mx-auto grid gap-6">
+        {/* Subject Input */}
+        <div className="bg-white shadow rounded-2xl p-6">
+          <h2 className="flex items-center gap-2 text-xl font-semibold mb-4"><BookOpen className="w-6 h-6 text-indigo-500"/>Enter Your Subject</h2>
+          <input 
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            placeholder="e.g. Physics"
+            className="border rounded-lg px-3 py-2 w-full"
+          />
+          <button onClick={generatePlan} className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg">Generate Study Plan</button>
+        </div>
+
+        {/* AI Study Plan */}
+        {studyPlan && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white shadow rounded-2xl p-6"
+          >
+            <h2 className="flex items-center gap-2 text-xl font-semibold mb-4"><Brain className="w-6 h-6 text-green-500"/>AI Study Plan for {studyPlan.subject}</h2>
+            <ul className="list-disc list-inside space-y-2">
+              {studyPlan.routine.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+            <p className="mt-4 text-gray-700"><strong>Tips:</strong> {studyPlan.tips}</p>
+          </motion.div>
+        )}
+
+        {/* Past Papers Section */}
+        <div className="bg-white shadow rounded-2xl p-6">
+          <h2 className="flex items-center gap-2 text-xl font-semibold mb-4"><FileText className="w-6 h-6 text-orange-500"/>Past Papers (2015-2025)</h2>
+          <p className="text-gray-600">Browse previous SSC papers with solutions (to be integrated).</p>
+        </div>
+
+        {/* Progress Tracker */}
+        <div className="bg-white shadow rounded-2xl p-6">
+          <h2 className="flex items-center gap-2 text-xl font-semibold mb-4"><CheckCircle className="w-6 h-6 text-blue-500"/>Your Progress</h2>
+          <p className="text-gray-600">AI-powered performance tracker (coming soon).</p>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+
+---
+
+# Full project files (ready-to-use)
+
+Below are the complete frontend files you can copy into a Vite React project. This includes the Study features and connects to the backend endpoints created earlier.
+
+## index.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSC A+ Achiver AI</title>
+  </head>
+  <body class="bg-gray-50">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+```
+
+## package.json
+```json
+{
+  "name": "ssc-achiver-ai",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.2",
+    "postcss": "^8.4.6",
+    "tailwindcss": "^3.3.0",
+    "vite": "^4.0.0"
+  }
+}
+```
+
+## tailwind.config.js
+```js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: { extend: {} },
+  plugins: [],
+};
+```
+
+## postcss.config.js
+```js
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+```
+
+## vite.config.js
+```js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+})
+```
+
+## src/main.jsx
+```jsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import './index.css'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+```
+
+## src/index.css
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light dark; }
+
+body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+```
+
+## src/lib/api.js
+```js
+import axios from 'axios';
+const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || 'http://localhost:4000' });
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('token');
+  if(token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+export default api;
+```
+
+## src/App.jsx
+```jsx
+import React, { useState } from 'react';
+import Header from './components/Header';
+import MCQTest from './sections/MCQTest';
+import Creative from './sections/Creative';
+import Reports from './sections/Reports';
+import StudyPlan from './sections/StudyPlan';
+import Papers from './sections/Papers';
+import Admin from './sections/Admin';
+
+export default function App(){
+  const [tab, setTab] = useState('mcq');
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-900">
+      <Header tab={tab} onTab={setTab} />
+      <main className="max-w-6xl mx-auto p-4">
+        {tab==='mcq' && <MCQTest/>}
+        {tab==='creative' && <Creative/>}
+        {tab==='reports' && <Reports/>}
+        {tab==='study' && <StudyPlan/>}
+        {tab==='papers' && <Papers/>}
+        {tab==='admin' && <Admin/>}
+      </main>
+    </div>
+  );
+}
+```
+
+## src/components/Header.jsx
+```jsx
+import React from 'react';
+export default function Header({ tab, onTab }){
+  const tabs = [
+    ['mcq','MCQ Test'],['creative','Creative Answer'],['reports','Reports'],['study','Study Plan'],['papers','Past Papers'],['admin','Admin']
+  ];
+  return (
+    <header className="bg-white shadow p-4 sticky top-0 z-30">
+      <div className="max-w-6xl mx-auto flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-pink-500 rounded-full flex items-center justify-center text-white font-bold">A+</div>
+          <div>
+            <h1 className="text-lg font-bold">SSC A+ Achiver AI</h1>
+            <div className="text-xs text-gray-500">AI-driven MCQ, creative answers & personal study plans</div>
+          </div>
+        </div>
+        <nav className="flex gap-2">
+          {tabs.map(t=> (
+            <button key={t[0]} onClick={()=>onTab(t[0])} className={`px-3 py-1 rounded-full text-sm ${tab===t[0]? 'bg-black text-white' : 'bg-gray-100'}`}>{t[1]}</button>
+          ))}
+        </nav>
+      </div>
+    </header>
+  );
+}
+```
+
+## src/sections/MCQTest.jsx
+```jsx
+import React, { useState } from 'react';
+import api from '../lib/api';
+export default function MCQTest(){
+  const [subject, setSubject] = useState('Physics');
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState({});
+  const [score, setScore] = useState(null);
+  const [loading, setLoading] = useState(false);
+  async function generate(){
+    setLoading(true); setScore(null);
+    try{ const r = await api.post('/api/mcq/generate', { subject, count:10 }); setQuestions(r.data.items||[]); setAnswers({}); }catch(e){ alert('Failed to generate'); }
+    setLoading(false);
+  }
+  async function submit(){
+    const payload = Object.entries(answers).map(([id,chosen])=> ({ id, chosen }));
+    try{ const r = await api.post('/api/mcq/submit', { answers: payload }); setScore(r.data.score); }catch(e){ alert('Submit failed'); }
+  }
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
+        <select value={subject} onChange={e=>setSubject(e.target.value)} className="border rounded px-3 py-2">
+          {['Bangla','English','Math','Physics','Chemistry','Biology','HigherMath'].map(s=> <option key={s}>{s}</option>)}
+        </select>
+        <button onClick={generate} className="px-4 py-2 bg-blue-600 text-white rounded">{loading? 'Generating...':'Generate Test'}</button>
+        {score!==null && <div className="ml-3 font-semibold">Score: {score}%</div>}
+      </div>
+      <div className="grid gap-3">
+        {questions.map((q,i)=> (
+          <div key={q.id} className="bg-white p-4 rounded-xl shadow">
+            <div className="font-medium mb-2">Q{i+1}. {q.stem}</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {q.options?.map(opt=> (
+                <label key={opt.key} className={`border rounded p-2 cursor-pointer flex items-center gap-2 ${answers[q.id]===opt.key? 'border-blue-600 bg-blue-50':''}`}>
+                  <input type="radio" name={q.id} checked={answers[q.id]===opt.key} onChange={()=>setAnswers(a=>({...a, [q.id]: opt.key}))} />
+                  <div><span className="font-semibold">{opt.key})</span> {opt.text}</div>
+                </label>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      {questions.length>0 && <div className="flex gap-2"><button onClick={submit} className="px-4 py-2 bg-green-600 text-white rounded">Submit</button></div>}
+    </div>
+  );
+}
+```
+
+## src/sections/Creative.jsx
+```jsx
+import React, { useState } from 'react';
+import api from '../lib/api';
+export default function Creative(){
+  const [subject, setSubject] = useState('Bangla');
+  const [stem, setStem] = useState('একটি গ্রামাঞ্চলের পানি সংকটের উদ্দীপক...');
+  const [answer, setAnswer] = useState('');
+  const [loading, setLoading] = useState(false);
+  async function generate(){
+    setLoading(true); setAnswer('');
+    try{ const r = await api.post('/api/creative/generate', { subject, stem, language:'bn' }); setAnswer(r.data.answer||'No answer'); }catch(e){ alert('Failed'); }
+    setLoading(false);
+  }
+  return (
+    <div className="space-y-3">
+      <div className="flex gap-2 items-center">
+        <select className="px-3 py-2 border rounded" value={subject} onChange={e=>setSubject(e.target.value)}>
+          {['Bangla','English','Physics','Chemistry','Biology','Math','HigherMath'].map(s=> <option key={s}>{s}</option>)}
+        </select>
+        <button onClick={generate} className="px-4 py-2 rounded bg-indigo-600 text-white">{loading? 'Generating...':'Generate Answer'}</button>
+      </div>
+      <textarea className="w-full border rounded p-3 h-28" value={stem} onChange={e=>setStem(e.target.value)} />
+      <div className="bg-white p-4 rounded-xl shadow whitespace-pre-wrap min-h-[120px]">{answer || <span className="text-gray-400">The generated answer will appear here.</span>}</div>
+    </div>
+}
+```
+
+## src/sections/Reports.jsx
+```jsx
+import React, { useEffect, useState } from 'react';
+import api from '../lib/api';
+export default function Reports(){
+  const [summary, setSummary] = useState(null);
+  useEffect(()=>{ (async()=>{ try{ const r = await api.get('/api/reports/summary'); setSummary(r.data); }catch(e){console.error(e);} })(); },[]);
+  if(!summary) return <div>Loading...</div>
+  return (
+    <div className="grid md:grid-cols-3 gap-4">
+      <div className="bg-white p-4 rounded-xl shadow"><div className="text-sm text-gray-500">Latest Score</div><div className="text-3xl font-bold">{summary.latest}%</div></div>
+      <div className="bg-white p-4 rounded-xl shadow"><div className="text-sm text-gray-500">Average</div><div className="text-3xl font-bold">{summary.average}%</div></div>
+      <div className="bg-white p-4 rounded-xl shadow"><div className="text-sm text-gray-500">Tests</div><div className="text-3xl font-bold">{summary.count}</div></div>
+    </div>
+  );
+}
+```
+
+## src/sections/StudyPlan.jsx
+```jsx
+import React, { useEffect, useState } from 'react';
+import api from '../lib/api';
+export default function StudyPlan(){
+  const [plan, setPlan] = useState(null);
+  const [loading, setLoading] = useState(false);
+  async function load(){ setLoading(true); try{ const r = await api.get('/api/study'); setPlan(r.data.plan); }catch(e){ console.error(e);} setLoading(false); }
+  useEffect(()=>{ load(); },[]);
+  async function complete(idx){ await api.post(`/api/study/task/${idx}/complete`); load(); }
+  async function snooze(idx){ const minutes = prompt('Snooze minutes?', '60'); if(!minutes) return; await api.post(`/api/study/task/${idx}/snooze`, { minutes: Number(minutes) }); load(); }
+  if(loading) return <div>Loading study plan...</div>;
+  if(!plan) return <div>No study plan. Generate one from Reports tab.</div>;
+  return (
+    <div className="space-y-4">
+      <div className="grid md:grid-cols-2 gap-3">
+        {plan.plan.map((t, i)=> (
+          <div key={i} className="bg-white p-4 rounded-xl shadow">
+            <div className="flex justify-between items-start">
+              <div>
+                <div className="font-semibold">{t.subject} — {t.chapter}</div>
+                <div className="text-sm text-gray-600">{t.focus} • {t.minutes} min</div>
+                <div className="text-sm text-gray-500">Due: {new Date(t.dueDate).toLocaleString()}</div>
+              </div>
+              <div className="flex flex-col gap-2">
+                {t.status!=='done' && <button onClick={()=>complete(i)} className="px-3 py-1 bg-emerald-600 text-white rounded">Done</button>}
+                <button onClick={()=>snooze(i)} className="px-3 py-1 bg-yellow-400 text-black rounded">Snooze</button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+## src/sections/Papers.jsx
+```jsx
+import React, { useEffect, useState } from 'react';
+import api from '../lib/api';
+export default function Papers(){
+  const [years, setYears] = useState([]);
+  const [year, setYear] = useState('');
+  const [subject, setSubject] = useState('');
+  const [items, setItems] = useState([]);
+  useEffect(()=>{ (async()=>{ try{ const r = await api.get('/api/papers/years'); setYears(r.data.years||[]); }catch(e){console.error(e);} })(); },[]);
+  async function load(){ try{ const p = new URLSearchParams({ year, subject }); const r = await api.get('/api/papers/list?'+p.toString()); setItems(r.data.items||[]); }catch(e){console.error(e);} }
+  return (
+    <div className="space-y-3">
+      <div className="flex gap-2 items-center">
+        <select className="px-3 py-2 border rounded" value={year} onChange={e=>setYear(e.target.value)}><option value=''>Year</option>{years.map(y=> <option key={y}>{y}</option>)}</select>
+        <input className="px-3 py-2 border rounded" placeholder="Subject" value={subject} onChange={e=>setSubject(e.target.value)} />
+        <button onClick={load} className="px-4 py-2 rounded bg-slate-800 text-white">Load</button>
+      </div>
+      <ul className="space-y-2">{items.map(it=> <li key={it._id} className="bg-white p-3 rounded-lg shadow"><b>{it.subject}</b> – {it.chapter}<div className="text-gray-700">{it.stem}</div></li>)}</ul>
+    </div>
+  );
+}
+```
+
+## src/sections/Admin.jsx
+```jsx
+import React, { useState } from 'react';
+import api from '../lib/api';
+export default function Admin(){
+  const [file, setFile] = useState(null);
+  const [msg, setMsg] = useState('');
+  async function upload(){ if(!file){ setMsg('Choose a CSV file'); return; } const fd = new FormData(); fd.append('file', file); try{ const r = await api.post('/api/admin/import/csv', fd); const j = await r.data; setMsg('Inserted '+(j.inserted||0)+' rows'); }catch(e){ console.error(e); setMsg('Upload failed'); } }
+  return (
+    <div className="space-y-4">
+      <div className="bg-white p-4 rounded-xl shadow">
+        <h3 className="font-semibold mb-2">CSV Bulk Import (Admin)</h3>
+        <input type="file" accept=".csv" onChange={e=>setFile(e.target.files[0])} />
+        <div className="mt-2 flex gap-2"><button onClick={upload} className="px-3 py-2 bg-blue-600 text-white rounded">Upload</button><div className="text-sm text-gray-600">{msg}</div></div>
+        <details className="mt-2"><summary className="cursor-pointer">CSV Header Format</summary><pre className="p-2 text-sm">type,subject,chapter,yearTag,stem,optionA,optionB,optionC,optionD,answerKey,difficulty,blooms,source</pre></details>
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+# How to run locally
+1. Create a new folder and paste files above in the given structure.
+2. `npm install` to install deps.
+3. Start backend (see API folder in repo) or set `VITE_API_URL` to a reachable API.
+4. `npm run dev` and visit `http://localhost:5173`.
+
+---
+
+If you want, I can now:
+1. Build a ZIP of this frontend and provide a download link, or
+2. Push these files into your GitHub repo if you give a repo URL, or
+3. Add basic sample data (mock responses) so the site works without a backend.
+
+Which one do you want next? (1/2/3)
